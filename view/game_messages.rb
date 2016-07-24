@@ -5,11 +5,7 @@ module GameMessages
     puts "Here is your board:"
   end
 
-  def self.legal_placement(eval)
-    if eval
-      puts "That is a legal placement."
-    else
-      puts "That is an illegal placement."
-    end
+  def self.illegal_placement
+    puts "That is an illegal placement."
   end
 end

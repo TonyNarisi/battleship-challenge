@@ -7,11 +7,11 @@ module UserInterface
 
   def self.choose_starting_coordinates(ship)
     puts "Please choose a coordinate to begin placing #{ship.name}."
-    gets.chomp
+    gets.chomp.upcase
   end
 
   def self.choose_direction(ship, starting_coordinates)
     puts "Please choose a direction (up, down, left, or right) from #{starting_coordinates} in which to place #{ship.name}"
-    direction = gets.chomp
+    gets.chomp
   end
 end
