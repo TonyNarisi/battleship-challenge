@@ -41,4 +41,8 @@ class Player
     coordinates
   end
 
+  def lost?
+    @ships.all? { |ship| ship.sunken? }
+  end
+
 end

@@ -4,7 +4,7 @@ class Ship
   include BoardManipulation
 
   attr_reader :name, :code, :size
-  attr_accessor :coordinates
+  attr_accessor :coordinates, :damage_taken
 
   def initialize
     @damage_taken = 0
