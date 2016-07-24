@@ -11,7 +11,8 @@ class Player
   include UserInterface
   include BoardDisplay
 
-  attr_reader :board, :ships
+  attr_accessor :board
+  attr_reader :ships
 
   def initialize
     @ships = [AircraftCarrier.new, Battleship.new, Cruiser.new, Destroyer.new, Destroyer.new, Submarine.new, Submarine.new]
@@ -25,10 +26,10 @@ class Player
       until legal_move
         starting_coordinates = UserInterface::choose_starting_coordinates(ship)
         direction = UserInterface::choose_direction(ship, starting_coordinates)
-        legal_move = ship.legal_placement_size?(direction, starting_coordinates)
+        legal_move = ship.legal_placement?(@board, direction, starting_coordinates)
         GameMessages::illegal_placement if legal_move == false
       end
-        @board.place_ship(ship, starting_coordinates, direction)
+        board.place_ship(ship, starting_coordinates, direction)
         BoardDisplay::display(@board)
     end
   end
