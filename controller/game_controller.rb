@@ -25,7 +25,7 @@ class GameController
     computer = ComputerPlayer.new
     @players << computer
     computer.choose_starting_coordinates
-    BoardDisplay::display(computer.board)
+    GameMessages::computer_chosen_coordinates
 
     # This loops through turns until game ends
     until @players.any? { |player| player.lost? }
@@ -33,7 +33,7 @@ class GameController
       computer_turn(computer, human)
     end
 
-    # PUT GOODBYE MESSAGE HERE
+    GameMessages::goodbye
   end
 
   def human_turn(human, opponent)

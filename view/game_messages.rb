@@ -9,6 +9,10 @@ module GameMessages
     puts "That is an illegal placement."
   end
 
+  def self.computer_chosen_coordinates
+    puts "The computer has chosen their ship placement. Begin game!"
+  end
+
   def self.num_of_shots(player)
     num_of_shots = player.ships.select { |ship| !ship.sunken? }.length
     puts "You have #{num_of_shots} shots to fire this round."
@@ -25,5 +29,9 @@ module GameMessages
 
   def self.computer_sunk(ship)
     puts "The computer sunk your #{ship.name}!"
+  end
+
+  def goodbye
+    puts "Goodbye, thank you for playing!"
   end
 end
