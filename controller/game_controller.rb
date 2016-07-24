@@ -30,7 +30,10 @@ class GameController
     # This loops through turns until game ends
     until @players.any? { |player| player.lost? }
       human_turn(human, computer)
+      computer_turn(computer, human)
     end
+
+    # PUT GOODBYE MESSAGE HERE
   end
 
   def human_turn(human, opponent)
@@ -53,6 +56,14 @@ class GameController
         human.opponents_board.board[row][column] = "/"
       end
       BoardDisplay::display(human.opponents_board)
+    end
+  end
+
+  def computer_turn(computer, human)
+    num_of_shots = computer.ships.select { |ship| !ship.sunken? }.length
+    num_of_shots.times do
+      GameMessages::computer_num_of_shots(computer)
+      computer.fire_shots(human)
     end
   end
 
