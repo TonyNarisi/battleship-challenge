@@ -40,19 +40,25 @@ class GameController
     GameMessages::num_of_shots(human)
     num_of_shots = human.ships.select { |ship| !ship.sunken? }.length
     num_of_shots.times do
-      shot_coordinates = UserInterface::choose_shot_coordinates
-      numerical_indices = BoardManipulation::create_numerical_index(shot_coordinates)
+      repeat_choice = true
+      until repeat_choice == false
+        coordinate = UserInterface::choose_shot_coordinates
+        repeat_choice = human.coordinates_chosen.include?(coordinate)
+        puts "You have already chosen that coordinate, please choose again."
+      end
+      human.coordinates_chosen << coordinate
+      numerical_indices = BoardManipulation::create_numerical_index(coordinate)
       row = numerical_indices[1]
       column = numerical_indices[0]
       ClearScreen::reset_screen
-      if opponent.board.board[row][column] != "_"
-        puts "#{shot_coordinates} hit!" + "\n "
+      if opponent.board.board[row][column] != "_" 
+        puts "#{coordinate} hit!" + "\n "
         hit_ship = opponent.ships.find { |ship| ship.coordinates.include?([row, column]) }
         hit_ship.damage_taken += 1
         human.opponents_board.board[row][column] = "X"
         GameMessages::sunk(hit_ship) if hit_ship.sunken?
       else
-        puts "#{shot_coordinates} missed!" + "\n "
+        puts "#{coordinate} missed!" + "\n "
         human.opponents_board.board[row][column] = "/"
       end
       BoardDisplay::display(human.opponents_board)

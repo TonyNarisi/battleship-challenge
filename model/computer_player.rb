@@ -5,11 +5,6 @@ class ComputerPlayer < Player
   POSSIBLE_LETTERS = %w(A B C D E F G H I J)
   POSSIBLE_NUMBERS = (0..9).to_a.map { |num| num.to_s }
 
-  def initialize
-    super
-    @coordinates_chosen = []
-  end
-
   def choose_starting_coordinates
     @ships.each do |ship|
       legal_move = false
@@ -31,7 +26,7 @@ class ComputerPlayer < Player
     row = numerical_indices[1]
     column = numerical_indices[0]
     ClearScreen::reset_screen
-    if human.board.board[row][column] != "_"
+    if human.board.board[row][column] != "_" 
       puts "Computer hits at #{coordinate}!"
       human.board.board[row][column] = "X"
       hit_ship = human.ships.find { |ship| ship.coordinates.include?([row, column]) }
@@ -40,8 +35,8 @@ class ComputerPlayer < Player
     else
       puts "Computer misses at #{coordinate}!"
       human.board.board[row][column] = "/"
-      BoardDisplay::display(human.board)
     end
+    BoardDisplay::display(human.board)
     sleep(2)
   end
 
