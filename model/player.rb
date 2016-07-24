@@ -17,7 +17,6 @@ class Player
   def initialize
     @ships = [AircraftCarrier.new, Battleship.new, Cruiser.new, Destroyer.new, Destroyer.new, Submarine.new, Submarine.new]
     @board = Board.new
-    @oppenents_board = Board.new
   end
 
   def choose_starting_coordinates
