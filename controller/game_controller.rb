@@ -2,10 +2,12 @@ require_relative '../view/game_messages'
 require_relative '../model/player'
 require_relative '../view/board_display'
 require_relative '../model/computer_player'
+require_relative '../view/clear_screen'
 
 class GameController
   include GameMessages
   include BoardDisplay
+  include ClearScreen
 
   def initialize
     @players = []
@@ -33,17 +35,24 @@ class GameController
 
   def human_turn(human, opponent)
     GameMessages::num_of_shots(human)
-    shot_coordinates = human.choose_shots
-    shot_coordinates.each do |coordinates|
-      numerical_indices = BoardManipulation::create_numerical_index(coordinates)
+    num_of_shots = human.ships.select { |ship| !ship.sunken? }.length
+    num_of_shots.times do
+      shot_coordinates = UserInterface::choose_shot_coordinates
+      numerical_indices = BoardManipulation::create_numerical_index(shot_coordinates)
       row = numerical_indices[1]
       column = numerical_indices[0]
+      ClearScreen::reset_screen
       if opponent.board.board[row][column] != "_"
-        puts "#{coordinates} hit!"
-        hit_ship = opponent.ships.find { |ship| ship.coordinates.include?([row,column]) }
+        puts "#{shot_coordinates} hit!" + "\n "
+        hit_ship = opponent.ships.find { |ship| ship.coordinates.include?([row, column]) }
         hit_ship.damage_taken += 1
+        human.opponents_board.board[row][column] = "X"
         GameMessages::sunk(hit_ship) if hit_ship.sunken?
+      else
+        puts "#{shot_coordinates} missed!" + "\n "
+        human.opponents_board.board[row][column] = "/"
       end
+      BoardDisplay::display(human.opponents_board)
     end
   end
 

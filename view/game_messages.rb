@@ -15,6 +15,6 @@ module GameMessages
   end
 
   def self.sunk(ship)
-    puts "You sunk your opponent's #{ship.name}!"
+    puts "You sunk your opponent's #{ship.name}!" + "\n "
   end
 end

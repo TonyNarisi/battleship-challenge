@@ -11,13 +11,14 @@ class Player
   include UserInterface
   include BoardDisplay
 
-  attr_accessor :board
+  attr_accessor :board, :opponents_board
   attr_reader :ships
 
   def initialize
     @ships = [AircraftCarrier.new, Battleship.new, Cruiser.new, Destroyer.new, Destroyer.new, Submarine.new, Submarine.new]
     @board = Board.new
     @guessed_coordinates
+    @opponents_board = Board.new
   end
 
   def choose_starting_coordinates
@@ -35,10 +36,7 @@ class Player
   end
 
   def choose_shots
-    num_of_shots = @ships.select { |ship| !ship.sunken? }.length
-    coordinates = []
-    num_of_shots.times { coordinates << UserInterface::choose_shot_coordinates }
-    coordinates
+    UserInterface::choose_shot_coordinates
   end
 
   def lost?
