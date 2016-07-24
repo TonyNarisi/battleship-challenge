@@ -31,6 +31,7 @@ class Player
         GameMessages::illegal_placement if legal_move == false
       end
         board.place_ship(ship, starting_coordinates, direction)
+        ClearScreen::reset_screen
         BoardDisplay::display(@board)
     end
   end

@@ -14,6 +14,9 @@ class GameController
   end
 
   def play_game
+
+    ClearScreen::reset_screen
+
     # This sets up the player's board
     human = Player.new
     @players << human
