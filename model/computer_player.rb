@@ -9,16 +9,36 @@ class ComputerPlayer < Player
     @ships.each do |ship|
       legal_move = false
       until legal_move
-        letters = %w(A B C D E F G H I J)
-        numbers = (0..9).to_a
-        starting_coordinates = letters.sample + numbers.sample.to_s
+        starting_coordinates = choose_coordinate
         direction = ["up","down","left","right"].sample
         legal_move = ship.legal_placement?(@board, direction, starting_coordinates)
-        GameMessages::illegal_placement if legal_move == false
       end
         board.place_ship(ship, starting_coordinates, direction)
     end
   end
+
+  def choose_coordinate
+    POSSIBLE_LETTERS.sample + POSSIBLE_NUMBERS.sample
+  end
+
+  def choose_shot_coordinates
+    repeat_choice = true
+    until repeat_choice == false
+      coordinate = choose_coordinate
+      repeat_choice = coordinates_chosen.include?(coordinate)
+    end
+    coordinates_chosen << coordinate
+    coordinate
+  end
+
+  def computer_turn(computer, human)
+    num_of_shots = computer.ships.select { |ship| !ship.sunken? }.length
+    num_of_shots.times do
+      GameMessages::computer_num_of_shots(computer)
+      computer.fire_shots(human)
+    end
+  end
+
 
   def fire_shots(human)
     coordinate = choose_shot_coordinates
@@ -38,16 +58,6 @@ class ComputerPlayer < Player
     end
     BoardDisplay::display(human.board)
     sleep(2)
-  end
-
-  def choose_shot_coordinates
-    repeat_choice = true
-    until repeat_choice == false
-      coordinate = POSSIBLE_LETTERS.sample + POSSIBLE_NUMBERS.sample
-      repeat_choice = @coordinates_chosen.include?(coordinate)
-    end
-    @coordinates_chosen << coordinate
-    coordinate
   end
 
 end

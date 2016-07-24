@@ -31,7 +31,20 @@ module GameMessages
     puts "The computer sunk your #{ship.name}!"
   end
 
-  def goodbye
+  def self.goodbye
     puts "Goodbye, thank you for playing!"
   end
+
+  def self.repeat_coordinate
+    puts "You have already chosen that coordinate, please choose again."
+  end
+
+  def self.successful_shot(coordinate)
+    puts "#{coordinate} hit!" + "\n "
+  end
+
+  def self.missed_shot(coordinate)
+    puts "#{coordinate} missed!" + "\n "
+  end
+
 end
