@@ -23,7 +23,14 @@ class Ship
     column = x_y_coordinates[0]
     coordinates_to_check = []
     if direction == "up"
-      row - (@size - 1) >= 0
+      if row - (@size - 1) >= 0
+        n = row
+        until n == row - @size
+          coordinates_to_check << [n,column]
+          n -= 1
+        end
+        coordinates_to_check.none? { |coordinate| player_board.filled_in_spaces.include?(coordinate)}
+      end
     elsif direction == "down"
       if row + (@size - 1) <= 9
         n = row
@@ -34,10 +41,23 @@ class Ship
         coordinates_to_check.none? { |coordinate| player_board.filled_in_spaces.include?(coordinate)}
       end
     elsif direction == "right"
-      column + (@size - 1) <= 9
-        # coordinates_to_check << board[column][]
+      if column + (@size - 1) <= 9
+        n = column
+        until n == column + @size
+          coordinates_to_check << [row,n]
+          n += 1
+        end
+        coordinates_to_check.none? { |coordinate| player_board.filled_in_spaces.include?(coordinate)}
+      end
     elsif direction == "left"
-      column - (@size - 1) >= 0
+      if column - (@size - 1) >= 0
+        n = column
+        until n == column - @size
+          coordinates_to_check << [row,n]
+          n -= 1
+        end
+        coordinates_to_check.none? { |coordinate| player_board.filled_in_spaces.include?(coordinate)}
+      end
     end
   end
 
