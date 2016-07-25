@@ -40,24 +40,37 @@ class ComputerPlayer < Player
   end
 
 
-  def fire_shots(human)
+  def take_turn(player, opponent)
+    GameMessages::computer_num_of_shots(player)
+    ships_remaining.times { player.fire_shots(player, opponent) }
+  end
+
+  def fire_shots(player, opponent)
     coordinate = choose_shot_coordinates
     numerical_indices = BoardManipulation::create_numerical_index(coordinate)
     row = numerical_indices[1]
     column = numerical_indices[0]
     ClearScreen::reset_screen
-    if human.board.board[row][column] != "_" 
-      puts "Computer hits at #{coordinate}!"
-      human.board.board[row][column] = "X"
-      hit_ship = human.ships.find { |ship| ship.coordinates.include?([row, column]) }
-      hit_ship.damage_taken += 1
-      GameMessages::computer_sunk(hit_ship) if hit_ship.sunken?
+    if opponent.board.board[row][column] != "_" 
+      successful_shot(player, opponent, coordinate, row, column)
     else
-      puts "Computer misses at #{coordinate}!"
-      human.board.board[row][column] = "/"
+      missed_shot(opponent, coordinate, row, column)
     end
-    BoardDisplay::display(human.board)
+    BoardDisplay::display(opponent.board)
     sleep(2)
+  end
+
+  def successful_shot(player, opponent, coordinate, row, column)
+    GameMessages::successful_computer_shot(coordinate)
+    hit_ship = opponent.find_hit_ship(row, column)
+    hit_ship.damage_taken += 1
+    opponent.board.board[row][column] = "X"
+    GameMessages::computer_sunk(hit_ship) if hit_ship.sunken?
+  end
+
+  def missed_shot(opponent, coordinate, row, column)
+    GameMessages::missed_computer_shot(coordinate)
+    opponent.board.board[row][column] = "/"
   end
 
 end

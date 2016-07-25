@@ -43,9 +43,10 @@ class HumanPlayer < Player
 
   def successful_shot(player, opponent, coordinate, row, column)
     GameMessages::successful_shot(coordinate)
-    hit_ship = opponent.ships.find { |ship| ship.coordinates.include?([row, column]) }
+    hit_ship = opponent.find_hit_ship(row, column)
     hit_ship.damage_taken += 1
     player.opponents_board.board[row][column] = "X"
+    GameMessages::sunk(hit_ship) if hit_ship.sunken?
   end
 
   def missed_shot(player, coordinate, row, column)

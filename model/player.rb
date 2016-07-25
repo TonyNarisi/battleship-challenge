@@ -20,12 +20,16 @@ class Player
     @coordinates_chosen = []
   end
 
-  def choose_shots
-    UserInterface::choose_shot_coordinates
+  def ships_remaining
+    ships.select { |ship| !ship.sunken? }.length
   end
 
   def lost?
     @ships.all? { |ship| ship.sunken? }
+  end
+
+  def find_hit_ship(row, column)
+    ships.find { |ship| ship.coordinates.include?([row, column]) }
   end
 
 end

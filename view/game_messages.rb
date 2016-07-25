@@ -47,4 +47,12 @@ module GameMessages
     puts "#{coordinate} missed!" + "\n "
   end
 
+  def self.successful_computer_shot(coordinate)
+    puts "Computer hits at #{coordinate}!" + "\n "
+  end
+
+  def self.missed_computer_shot(coordinate)
+    puts "Computer misses at #{coordinate}!" + "\n "
+  end
+
 end
