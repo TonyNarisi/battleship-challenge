@@ -2,7 +2,7 @@ module BoardManipulation
 
   def self.convert_column_to_index(letter)
     columns = %w(A B C D E F G H I J)
-    columns.index(letter)
+    columns.index(letter.upcase)
   end
 
   def self.create_numerical_index(coordinates)

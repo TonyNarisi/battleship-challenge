@@ -12,6 +12,6 @@ module UserInterface
 
   def self.choose_direction(ship, starting_coordinates)
     puts "Please choose a direction (up, down, left, or right) from #{starting_coordinates} in which to place #{ship.name}"
-    direction = gets.chomp
+    gets.chomp
   end
 end

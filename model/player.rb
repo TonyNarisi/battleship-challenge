@@ -11,34 +11,25 @@ class Player
   include UserInterface
   include BoardDisplay
 
-  attr_reader :board, :ships
+  attr_accessor :board, :coordinates_chosen
+  attr_reader :ships
 
   def initialize
     @ships = [AircraftCarrier.new, Battleship.new, Cruiser.new, Destroyer.new, Destroyer.new, Submarine.new, Submarine.new]
     @board = Board.new
-    @oppenents_board = Board.new
+    @coordinates_chosen = []
   end
 
-  def choose_starting_coordinates
-    @ships.each do |ship|
-      legal_move = false
-      until legal_move
-        starting_coordinates = UserInterface::choose_starting_coordinates(ship)
-        direction = UserInterface::choose_direction(ship, starting_coordinates)
-        legal_move = ship.legal_placement?(direction, starting_coordinates)
-        GameMessages::legal_placement(legal_move)
-        @board.place_ship(ship, starting_coordinates, direction)
-        BoardDisplay::display(@board)
-      end
-
-    end
+  def ships_remaining
+    ships.select { |ship| !ship.sunken? }.length
   end
 
-  def choose_shots
-    num_of_shots = @ships.select { |ship| !ship.sunken? }.length
-    coordinates = []
-    num_of_shots.times { coordinates << UserInterface::choose_shot_coordinates }
-    coordinates
+  def lost?
+    @ships.all? { |ship| ship.sunken? }
+  end
+
+  def find_hit_ship(row, column)
+    ships.find { |ship| ship.coordinates.include?([row, column]) }
   end
 
 end
