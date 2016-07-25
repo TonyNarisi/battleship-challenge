@@ -1,8 +1,5 @@
 require_relative '../view/game_messages'
-require_relative '../model/player'
 require_relative '../view/board_display'
-require_relative '../model/computer_player'
-require_relative '../model/human_player'
 require_relative '../view/clear_screen'
 
 class GameController

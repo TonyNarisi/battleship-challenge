@@ -1,9 +1,3 @@
-require_relative 'aircraft_carrier.rb'
-require_relative 'battleship.rb'
-require_relative 'cruiser.rb'
-require_relative 'destroyer.rb'
-require_relative 'submarine.rb'
-require_relative 'board.rb'
 require_relative '../view/user_interface'
 require_relative '../view/board_display'
 
