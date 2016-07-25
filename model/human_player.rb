@@ -18,9 +18,9 @@ class HumanPlayer < Player
         legal_move = ship.legal_placement?(board, direction, starting_coordinates)
         GameMessages::illegal_placement if legal_move == false
       end
-        board.place_ship(ship, starting_coordinates, direction)
-        ClearScreen::reset_screen
-        BoardDisplay::display(board)
+      board.place_ship(ship, starting_coordinates, direction)
+      ClearScreen::reset_screen
+      BoardDisplay::display(board)
     end
   end
 

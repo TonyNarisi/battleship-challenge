@@ -39,7 +39,6 @@ class ComputerPlayer < Player
     end
   end
 
-
   def take_turn(player, opponent)
     GameMessages::computer_num_of_shots(player)
     ships_remaining.times { player.fire_shots(player, opponent) }
