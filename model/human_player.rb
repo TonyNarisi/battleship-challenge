@@ -62,10 +62,14 @@ class HumanPlayer < Player
     repeat_choice = true
     until repeat_choice == false
       coordinate = UserInterface::choose_shot_coordinates
-      repeat_choice = coordinates_chosen.include?(coordinate)
-      GameMessages::repeat_coordinate unless repeat_choice = false
+      if @coordinates_chosen.include?(coordinate)
+        repeat_choice = true
+        GameMessages::repeat_coordinate
+      else
+        repeat_choice = false
+      end
     end
-    coordinates_chosen << coordinate
+    @coordinates_chosen << coordinate
     coordinate
   end
 
